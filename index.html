@@ -7,7 +7,7 @@
 <meta name="description" content="Verex Engineering Works — GST-registered manufacturer of jaw crushers, vibrating screens, feeders, mobile crushers, conveyors and hoppers in Udaipur, Rajasthan. 200+ clients. Pan-India supply." />
 <meta name="keywords" content="jaw crusher manufacturer Udaipur, vibrating screen manufacturer Rajasthan, grizzly feeder, mobile jaw crusher, conveyor manufacturer Udaipur, hopper manufacturer, stone crusher Rajasthan, Verex Engineering Works" />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://verexengworks.com/" />
+<link rel="canonical" href="https://verexcrusher.com/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet" />
@@ -776,6 +776,43 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
 @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
 
 /* ═══════════════════════════════════════════════════════════════
+   8b. HOW TO ORDER
+══════════════════════════════════════════════════════════════ */
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  margin-top: 40px;
+}
+.order-card {
+  background: var(--grey);
+  padding: 32px 28px;
+  border-top: 3px solid var(--orange);
+}
+.order-num {
+  width: 40px;
+  height: 40px;
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.order-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  margin-bottom: 10px;
+}
+.order-desc { font-size: 14.5px; color: var(--body); line-height: 1.6; }
+@media (max-width: 900px) { .order-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════════════════════
    9. GALLERY
 ══════════════════════════════════════════════════════════════ */
 #gallery { background: var(--navy); }
@@ -1127,6 +1164,25 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
   transition: opacity .2s;
 }
 #wa-float:hover .wa-tooltip { opacity: 1; }
+@media (max-width: 768px) { #wa-float { display: none; } }
+
+.hero-scroll-arrow {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--white);
+  opacity: .8;
+  cursor: pointer;
+  z-index: 5;
+  animation: heroBounce 2s infinite;
+}
+.hero-scroll-arrow:hover { opacity: 1; }
+@keyframes heroBounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 8px); }
+}
+@media (max-width: 768px) { .hero-scroll-arrow { display: none; } }
 
 /* ═══════════════════════════════════════════════════════════════
    14. MOBILE STICKY BOTTOM BAR
@@ -1277,6 +1333,9 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
         <div class="hero-chip"><div class="chip-check">✓</div> Pan-India Supply</div>
       </div>
     </div>
+  </div>
+  <div class="hero-scroll-arrow" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v14M5 12l7 7 7-7"/></svg>
   </div>
 </section>
 
@@ -1742,6 +1801,33 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
   </div>
 </section>
 
+<!-- ══ 10b. HOW TO ORDER ═══════════════════════════════════════════ -->
+<section id="how-to-order">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Simple Process</span>
+      <h2 class="section-h2">How to Order</h2>
+    </div>
+    <div class="order-grid">
+      <div class="order-card">
+        <div class="order-num">1</div>
+        <div class="order-title">Enquire</div>
+        <div class="order-desc">Call, WhatsApp, or fill the enquiry form with your product and requirement.</div>
+      </div>
+      <div class="order-card">
+        <div class="order-num">2</div>
+        <div class="order-title">Get Quote &amp; Specs</div>
+        <div class="order-desc">Our team shares pricing, specifications, and delivery timeline for your needs.</div>
+      </div>
+      <div class="order-card">
+        <div class="order-num">3</div>
+        <div class="order-title">Confirm &amp; Dispatch</div>
+        <div class="order-desc">Confirm order with GST invoice. Machine is dispatched from our Udaipur factory.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ 11. ENQUIRY ═══════════════════════════════════════════════ -->
 <section id="enquiry">
   <div class="container">
@@ -1749,7 +1835,8 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
       <!-- Form -->
       <div>
         <h2 class="enquiry-h2">Get a Quote</h2>
-        <p style="color:var(--body);margin-bottom:28px;font-size:15px;">Drop your number and we'll call you back, or reach us directly on WhatsApp.</p>
+        <p style="color:var(--body);margin-bottom:8px;font-size:15px;">Drop your number and we'll call you back, or reach us directly on WhatsApp.</p>
+        <p id="enquiry-product-note" style="color:var(--orange);font-weight:700;font-size:13px;margin-bottom:20px;display:none;"></p>
         <form id="enquiry-form" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group full">
@@ -1759,7 +1846,7 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
             <button type="submit" class="form-submit" style="flex:1;min-width:180px;">Send Enquiry</button>
-            <a href="https://wa.me/919929098656" target="_blank" class="form-submit" style="flex:1;min-width:180px;background:#25d366;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#fff;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;">💬 WhatsApp Us</a>
+            <a href="https://wa.me/919929098656" target="_blank" id="enquiry-wa-btn" class="form-submit" style="flex:1;min-width:180px;background:#25d366;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#fff;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;">💬 WhatsApp Us</a>
           </div>
           <div class="form-success" id="form-success">✓ Enquiry sent! We will contact you within 24 hours.</div>
         </form>
@@ -1817,12 +1904,7 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
       <div>
         <div class="footer-brand-name">Verex</div>
         <div class="footer-brand-sub">Engineering Works</div>
-        <p class="footer-tagline">GST-registered manufacturer of stone crushers, screening plants, and industrial machinery. Based in Udaipur, Rajasthan. Supplying across India since 2022.</p>
-        <div class="footer-socials">
-          <a href="#" class="footer-social">FB</a>
-          <a href="#" class="footer-social">IN</a>
-          <a href="#" class="footer-social">LI</a>
-        </div>
+        <p class="footer-tagline">GST-registered manufacturer of jaw crushers, vibrating screens, feeders, and industrial machinery. Based in Udaipur, Rajasthan.</p>
       </div>
       <div>
         <div class="footer-col-label">Our Products</div>
@@ -1954,13 +2036,16 @@ function toggleMenu() {
 
 /* ── PREFILL product in form ─────────────────────────────────── */
 function prefillProduct(name) {
-  setTimeout(() => {
-    const sel = document.getElementById('f-product');
-    if (!sel) return;
-    for (let i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].text === name) { sel.selectedIndex = i; break; }
-    }
-  }, 600);
+  const waBtn = document.getElementById('enquiry-wa-btn');
+  const note = document.getElementById('enquiry-product-note');
+  if (waBtn) {
+    const msg = encodeURIComponent(`Hi, I'm interested in ${name}. Please share more details.`);
+    waBtn.href = `https://wa.me/919929098656?text=${msg}`;
+  }
+  if (note) {
+    note.textContent = `Enquiring about: ${name}`;
+    note.style.display = 'block';
+  }
 }
 
 
