@@ -1838,10 +1838,13 @@ tbody td:first-child { font-weight: 700; color: var(--navy); }
         <p style="color:var(--body);margin-bottom:8px;font-size:15px;">Drop your number and we'll call you back, or reach us directly on WhatsApp.</p>
         <p id="enquiry-product-note" style="color:var(--orange);font-weight:700;font-size:13px;margin-bottom:20px;display:none;"></p>
         <form id="enquiry-form" onsubmit="handleSubmit(event)">
+          <input type="hidden" name="access_key" value="bf993822-81b0-4dc0-998f-97295ec6288b" />
+          <input type="hidden" name="subject" value="New Enquiry — Verex Website" />
+          <input type="hidden" id="f-product-hidden" name="product" value="General Enquiry" />
           <div class="form-row">
             <div class="form-group full">
               <label class="form-label">Phone Number</label>
-              <input class="form-input" type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" required style="font-size:17px;height:58px;" />
+              <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+91 XXXXX XXXXX" required style="font-size:17px;height:58px;" />
             </div>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
@@ -2038,10 +2041,12 @@ function toggleMenu() {
 function prefillProduct(name) {
   const waBtn = document.getElementById('enquiry-wa-btn');
   const note = document.getElementById('enquiry-product-note');
+  const hidden = document.getElementById('f-product-hidden');
   if (waBtn) {
     const msg = encodeURIComponent(`Hi, I'm interested in ${name}. Please share more details.`);
     waBtn.href = `https://wa.me/919929098656?text=${msg}`;
   }
+  if (hidden) hidden.value = name;
   if (note) {
     note.textContent = `Enquiring about: ${name}`;
     note.style.display = 'block';
@@ -2059,17 +2064,41 @@ function openEnquiry(product) {
 
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  const msg = document.getElementById('form-success');
   btn.textContent = 'Sending…';
   btn.disabled = true;
-  setTimeout(() => {
-    e.target.reset();
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(Object.fromEntries(new FormData(form)))
+  })
+  .then(res => res.json())
+  .then(data => {
     btn.textContent = 'Send Enquiry';
     btn.disabled = false;
-    const msg = document.getElementById('form-success');
+    if (data.success) {
+      form.reset();
+      msg.textContent = '✓ Enquiry sent! We will contact you within 24 hours.';
+      msg.style.color = '';
+      msg.style.display = 'block';
+    } else {
+      msg.textContent = '✗ Could not send. Please call or WhatsApp us directly.';
+      msg.style.color = '#c0392b';
+      msg.style.display = 'block';
+    }
+    setTimeout(() => { msg.style.display = 'none'; }, 6000);
+  })
+  .catch(() => {
+    btn.textContent = 'Send Enquiry';
+    btn.disabled = false;
+    msg.textContent = '✗ Network error. Please call or WhatsApp us directly.';
+    msg.style.color = '#c0392b';
     msg.style.display = 'block';
     setTimeout(() => { msg.style.display = 'none'; }, 6000);
-  }, 800);
+  });
 }
 
 /* ── SMOOTH SCROLL for nav anchor links ─────────────────────── */
